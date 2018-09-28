@@ -1,14 +1,10 @@
-
-##code in this repo may not be correct (actually is just not correct now)
-
-
 # CS 440 MP2: Robotic Arm
 
 ## Implement:
 1. geometry.py
 2. transform.py
 3. search.py
-4. maze.py for extra credit only
+4. maze.py for extra credit only 
 
 ## Requirements:
 ```

@@ -26,6 +26,10 @@ def computeCoordinate(start, length, angle):
         Return:
             End position of the arm link, (x-coordinate, y-coordinate)
     """
+    corx=start[0]
+    cory=start[1]
+    new_cor=(corx+math.cos(-angle/180*math.pi)*length,cory+math.sin(-angle/180*math.pi)*length)
+    return new_cor
     pass
 
 def doesArmTouchObstacles(armPos, obstacles):
@@ -37,7 +41,24 @@ def doesArmTouchObstacles(armPos, obstacles):
 
         Return:
             True if touched. False it not.
-    """    
+    """
+    
+    for arm_idx in range(len(armPos)):
+        arm=armPos[arm_idx]
+        start=arm[0]
+        end=arm[1]
+        slope_x=end[0]-start[0]
+        slope_y=end[1]-start[1]
+        for step in range(1000):
+            current_point=(start[0]+step*slope_x/1000,start[1]+step*slope_y/1000)
+            for obstacle_idx in range(len(obstacles)):
+                obstacle=obstacles[obstacle_idx]
+                radius=obstacle[2]
+                obs_x=obstacle[0]
+                obs_y=obstacle[1]
+                distance=((obs_x-current_point[0])**2+(obs_y-current_point[1])**2)**0.5
+                if distance<=radius:
+                    return True
     return False
 
 def doesArmTouchGoals(armEnd, goals):
@@ -50,6 +71,14 @@ def doesArmTouchGoals(armEnd, goals):
         Return:
             True if touched. False it not.
     """
+    for goal_idx in range(len(goals)):
+                    goal=goals[goal_idx]
+                    radius=goal[2]
+                    goal_x=goal[0]
+                    goal_y=goal[1]
+                    distance=((goal_x-armEnd[0])**2+(goal_y-armEnd[1])**2)**0.5
+                    if distance<=radius:
+                        return True
     return False
 
 
@@ -63,4 +92,14 @@ def isArmWithinWindow(armPos, window):
         Return:
             True if all parts are in the window. False it not.
     """
+    for arm_idx in range(len(armPos)):
+        arm=armPos[arm_idx]
+        start=arm[0]
+        end=arm[1]
+        if end[0]!=start[0]:
+            slope=(end[1]-start[1])/(end[0]-start[0])
+            for step in range(101):
+                current_point=(start[0]+step*slope/100,start[1]+step*slope/100)
+                if current_point[0]>300 or current_point[0]<0 or current_point[1]>200 or current_point[1]<0:
+                    return False
     return True
