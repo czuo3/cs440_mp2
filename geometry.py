@@ -72,13 +72,13 @@ def doesArmTouchGoals(armEnd, goals):
             True if touched. False it not.
     """
     for goal_idx in range(len(goals)):
-                    goal=goals[goal_idx]
-                    radius=goal[2]
-                    goal_x=goal[0]
-                    goal_y=goal[1]
-                    distance=((goal_x-armEnd[0])**2+(goal_y-armEnd[1])**2)**0.5
-                    if distance<=radius:
-                        return True
+        goal=goals[goal_idx]
+        radius=goal[2]
+        goal_x=goal[0]
+        goal_y=goal[1]
+        distance=((goal_x-armEnd[0])**2+(goal_y-armEnd[1])**2)**0.5
+        if distance<=radius:
+            return True
     return False
 
 
@@ -96,10 +96,13 @@ def isArmWithinWindow(armPos, window):
         arm=armPos[arm_idx]
         start=arm[0]
         end=arm[1]
-        if end[0]!=start[0]:
-            slope=(end[1]-start[1])/(end[0]-start[0])
-            for step in range(101):
-                current_point=(start[0]+step*slope/100,start[1]+step*slope/100)
-                if current_point[0]>300 or current_point[0]<0 or current_point[1]>200 or current_point[1]<0:
-                    return False
+        #slope_x=end[0]-start[0]
+        #slope_y=end[1]-start[1]
+        #for step in range(1000):
+            #current_point=(start[0]+step*slope_x/1000,start[1]+step*slope_y/1000)
+            #if current_point[0]>300 or current_point[0]<0 or current_point[1]>200 or current_point[1]<0:
+                #return False
+        if start[0]>300 or start[0]<0 or start[1]>200 or start[1]<0 or end[0]>300 or end[0]<0 or end[1]>200 or end[1]<0:
+                return False
+
     return True
